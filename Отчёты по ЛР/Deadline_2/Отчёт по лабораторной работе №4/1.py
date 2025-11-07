@@ -1,0 +1,12 @@
+grades = []
+grades.append(4)
+grades.append(5)
+grades.append(2)
+grades.append(3)
+grades.append(5)
+print("Оценки:", grades)
+pervaya = grades.pop(0)
+poslednaya = grades.pop()
+srednyaya = sum(grades)/len(grades)
+print(f"Среднее: {srednyaya}")
+print("Оценки:", grades)
