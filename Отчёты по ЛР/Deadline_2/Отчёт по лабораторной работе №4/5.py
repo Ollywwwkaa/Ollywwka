@@ -1,5 +1,5 @@
 import string
-print("Введите текст (для завершения ввода нажмите Enter дважды):")
+print("Введите текст в конце пустая строка:")
 lines = []
 while True:
     line = input()
@@ -8,32 +8,34 @@ while True:
     lines.append(line)
 text = " ".join(lines)
 words = []
-prepinaniya = ""
+slovo = ""
 for char in text:
     if char.isalpha() or char.isdigit():
-        prepinaniya += char.lower()
+        slovo += char.lower()
     else:
-        if prepinaniya:
-            words.append(prepinaniya)
-            prepinaniya = ""
+        if slovo:
+            words.append(slovo)
+            slovo = ""
+if slovo:
+    words.append(slovo)
 if words:
-    maxi = words[0]
-    mini = words[0]
+    long = words[0]
+    short = words[0]
     for word in words:
-        if len(word) > len(maxi):
-            maxi = word
-        if len(word) < len(mini):
-            mini = word
-    srednyaya = 0
+        if len(word) > len(long):
+            long = word
+        if len(word) < len(short):
+            short = word
+    srednee = 0
     for word in words:
-        srednyaya += len(word)
-    sred = srednyaya / len(words)
+        srednee += len(word)
+    sred = srednee / len(words)
     kolichestvo = {}
     for word in words:
-            kolichestvo[word] = kolichestvo.get(word, 0) + 1
+        kolichestvo[word] = kolichestvo.get(word, 0) + 1
     sort = sorted(kolichestvo.items(), key=lambda x: x[1], reverse=True)
     slova = sort[:5]
-    print(f"\nСамое длинное слово: '{maxi}'")
-    print(f"Самое короткое слово: '{mini}'")
-    print(f"Средняя длина: {sred:.1f}")
-    print(f"Топ-5 слов: {slova}")
+    print(f"\nСамое длинное: '{long}'")
+    print(f"Самое короткое: '{short}'")
+    print(f"Средняя: {sred:.1f}")
+    print(f"5 слов: {slova}")
