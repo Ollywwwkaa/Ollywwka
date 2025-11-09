@@ -1,4 +1,4 @@
-def build_user_profile(user_id: int, **kwargs) -> dict:
+def build_user_profile(user_id: int, **kwargs):
     profile = {'user_id': user_id}
     profile.update(kwargs)
     return profile
