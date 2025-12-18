@@ -1,4 +1,4 @@
-virazhenie = input("Введите выражение (Пример: 2*5/2) ЧЕРЕЗ ПРОБЕЛ!:")
+virazhenie = input("Введите выражение (Пример: 2*5/2) ЧЕРЕЗ ПРОБЕЛ КАЖДЫЙ СИМВОЛ!:")
 parts = virazhenie.split()
 znaki = 0
 for part in parts:

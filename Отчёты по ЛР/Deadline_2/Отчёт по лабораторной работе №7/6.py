@@ -1,5 +1,4 @@
 from typing import List, Any
-
 def find_common_elements(list1: List[Any], list2: List[Any]) -> List[Any]:# Находит общие элементы между двумя списками без дубликатов.
     # Преобразуем списки в множества для удаления дубликатов и находим пересечение
     set1 = set(list1)

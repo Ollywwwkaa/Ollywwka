@@ -7,7 +7,7 @@ def format_report(report_title: str, *data: str, **properties: str):
     if properties:
         print("\n метаданные:")
         for key, value in properties.items():
-            print(f"  • {key}: {value}")
+            print(f"{key}: {value}")
 format_report(
     "Ежедневный отчет",
     "Продажи выросли на 10%",
