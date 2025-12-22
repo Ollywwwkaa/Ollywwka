@@ -1,56 +1,37 @@
-logs = [
-    "192.168.1.1 - GET /index.html 200",
-    "192.168.1.5 - GET /about 404",
-    "192.168.1.1 - POST /login 200",
-    "10.0.0.1 - GET /admin 500",
-    "192.168.1.5 - GET /contact 404",
-    "192.168.1.5 - GET /profile 404",
-    "192.168.1.1 - GET /home 200",
-    "10.0.0.1 - POST /admin 500",
-    "192.168.1.5 - GET /test 404",
-    "10.0.0.1 - GET /dashboard 500",
-    "192.168.1.10 - GET /index 200",
-    "192.168.1.10 - GET /login 404",]
-def analyze_server_logs(logs, error_threshold=3):
-    status_counts = {"200": 0, "404": 0, "500": 0}
-    ip_counts = {}
-    error_counts = {}
-    for log in logs:
-        parts = log.split()
-        if len(parts) >= 4:
-            ip = parts[0]
-            status = parts[-1]
-            if status in status_counts:
-                status_counts[status] += 1
-            ip_counts[ip] = ip_counts.get(ip, 0) + 1
-            if status in ("404", "500"):
-                error_counts[ip] = error_counts.get(ip, 0) + 1
-    top_ip = max(ip_counts, key=ip_counts.get, default=None)
-    suspicious_ips = [ip for ip, count in error_counts.items() 
-                      if count > error_threshold]
-    return status_counts, top_ip, suspicious_ips
-status_counts, top_ip, suspicious_ips = analyze_server_logs(logs, error_threshold=2)
-print("1. Количество запросов по кодам ответов:")
-for status, count in status_counts.items():
-    print(f"  Код {status}: {count} запросов")
-print(f"\n2. IP с наибольшим количеством запросов: {top_ip}")
-print(f"\n3. Подозрительные IP (с ошибками 404/500 > 2 раз):")
-if suspicious_ips:
-    for ip in suspicious_ips:
-        print(f"  {ip}")
+students = {
+    "Alice": {"Math": [4, 5, 5], "Physics": [4, 3], "CS": [5, 5, 5]},
+    "Bob": {"Math": [3, 4], "Physics": [3, 3], "CS": [4, 3]},
+    "Charlie": {"Math": [5, 5], "Physics": [4, 5], "CS": [5, 5]}}
+print("Средние баллы учеников:")
+for name, subjects in students.items():
+    print(f"\n{name}:")
+    for subject, grades in subjects.items():
+        average = sum(grades) / len(grades)
+        print(f"  {subject}: {average:.2f}")
+print("Поиск кандидатов на золотую медаль")
+medalists = []
+for name, subjects in students.items():
+    canBeMedalist = True
+    for subject, grades in subjects.items():
+        for grade in grades:
+            if grade < 4:
+                canBeMedalist = False
+                break
+        if subject == "CS":
+            csGrades = grades
+            csAverage = sum(csGrades) / len(csGrades)
+            if csAverage != 5.0:
+                canBeMedalist = False
+    if canBeMedalist:
+        medalists.append(name)
+print("Кандидаты на золотую медаль:")
+if len(medalists) == 0:
+    print("Кандидатов нет")
 else:
-    print("Подозрительных IP не обнаружено")
-print("Дополнительная статистика:")
-all_ips = set()
-for log in logs:
-    parts = log.split()
-    if parts:
-        all_ips.add(parts[0])
-print(f"Всего уникальных IP: {len(all_ips)}")
-print("\nСтатистика по IP-адресам:")
-for log in logs:
-    parts = log.split()
-    if len(parts) >= 4:
-        ip = parts[0]
-        status = parts[-1]
-        print(f"{ip}: {log.split('-', 1)[-1].strip()}")
+    for name in medalists:
+        allGrades = []
+        subjects = students[name]
+        for grades in subjects.values():
+            allGrades.extend(grades)
+        totalAverage = sum(allGrades) / len(allGrades)
+        print(f"{name}: общий средний балл = {totalAverage:.2f}")
